@@ -61,15 +61,8 @@ if __name__ == '__main__':
 #             if compare(segments1[:2], segments2[:2]):
 #                 if compare(segments1[:3], segments2[:3]) \
 #                         or (is_255(segments1[3]) and is_255(segments2[3])):
-#                     if ip1 in graph:
-#                         graph[ip1].append(ip2)
-#                     else:
-#                         graph[ip1] = [ip2]
-#
-#                     if ip2 in graph:
-#                         graph[ip2].append(ip1)
-#                     else:
-#                         graph[ip2] = [ip1]
+#                     graph.setdefault(ip1, []).append(ip2)
+#                     graph.setdefault(ip2, []).append(ip1)
 #             else:
 #                 break
 #

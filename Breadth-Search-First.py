@@ -20,6 +20,9 @@ def main():
 
     print('Path A to E:', get_path(pred, 'E'))
 
+    pred_rec = rec_bfs(graph, deque(['A']), {'A': None})
+    print('pred_rec', pred_rec)
+
 
 def bsf(graph, source_v):
     queue = deque([source_v])
@@ -46,6 +49,22 @@ def get_path(pred, v):
         v = pred[v]
 
     return path
+
+
+def rec_bfs(graph, queue, pred):
+    if len(queue) == 0:
+        return pred
+
+    curr_node = queue.popleft()
+    print(curr_node)
+
+    for neighbor in graph[curr_node]:
+        if neighbor not in pred:
+            pred[neighbor] = curr_node
+            queue.append(neighbor)
+
+    return rec_bfs(graph, queue, pred)
+
 
 
 # Traverses even disconnected graphs - that is,
