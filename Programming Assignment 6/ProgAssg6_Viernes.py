@@ -28,8 +28,8 @@ def decode(msg, cipher, all_ans, ans=[]):
         all_ans.append(''.join(ans))
         return True
 
+    # Find all possible code/s.
     possible_codes = []
-
     for max_len in range(2, len(msg)+1):
         if max_len > 5:
             break
@@ -41,20 +41,27 @@ def decode(msg, cipher, all_ans, ans=[]):
         else:
             pass
 
+    # Decode all possible code/s.
     if len(possible_codes) > 0:
         print(possible_codes, msg)
 
         for i in range(len(possible_codes)):
             code = possible_codes[i]
             ans.append(cipher[code])
+
             if decode(msg[len(code):], cipher, all_ans, ans):
+                # Clean ans for the next decoded message.
                 ans.pop()
 
+        # Clean ans for the next decoded message.
         if len(ans) > 0:
             ans.pop()
+            return False
     else:
+        # Backtrack if msg is invalid.
         if len(ans) > 0:
             ans.pop()
+            return False
 
 
 if __name__ == '__main__':
@@ -90,7 +97,7 @@ if __name__ == '__main__':
 #         return True
 #
 #     possible_codes = []
-#     for max_len in range(2, len(msg)+1):
+#     for max_len in range(2, len(msg) + 1):
 #         if max_len > 5:
 #             break
 #
@@ -102,14 +109,19 @@ if __name__ == '__main__':
 #         for i in range(len(possible_codes)):
 #             code = possible_codes[i]
 #             ans.append(cipher[code])
+#
 #             if decode(msg[len(code):], cipher, all_ans, ans):
+#                 # Clean ans for the next decoded message.
 #                 ans.pop()
 #
+#         # Clean ans for the next decoded message.
 #         if len(ans) > 0:
 #             ans.pop()
 #     else:
+#         # Backtrack if msg is invalid.
 #         if len(ans) > 0:
 #             ans.pop()
+#             return False
 #
 #
 # if __name__ == '__main__':

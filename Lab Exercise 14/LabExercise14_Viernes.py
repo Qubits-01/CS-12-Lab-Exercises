@@ -20,13 +20,8 @@ def main():
     for segment in segments:
         segment = segment.split()
 
-        if segment[0] in graph:
-            graph[segment[0]].append(segment[1])
-        else:
-            graph[segment[0]] = [segment[1]]
-
-        if segment[1] not in graph:
-            graph[segment[1]] = []
+        graph.setdefault(segment[0], []).append(segment[1])
+        graph.setdefault(segment[1], [])
 
     print(graph)
 
