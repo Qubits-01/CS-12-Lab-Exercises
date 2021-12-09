@@ -27,12 +27,22 @@ def main():
         '4': []
     }
 
-    costs, pred = shortest_path(d_graph_c, '0')
+    d_graph_d = {
+        'Paperclip': [('A', 100), ('B', 20)],
+        'A': [('C', 21), ('B', 100)],
+        'B': [('C', 1), ('TV', 100), ('Shirt', 1000)],
+        'C': [('GPU', 12)],
+        'TV': [],
+        'Shirt': [],
+        'GPU': []
+    }
+
+    costs, pred = dijkstra_sssp(d_graph_d, 'Paperclip')
     print(costs)
     print(pred)
 
 
-def shortest_path(graph, source_v):
+def dijkstra_sssp(graph, source_v):
     # Pseudocode
     '''
     Let distance of start vertex from start vertex = 0
@@ -106,7 +116,7 @@ def shortest_path(graph, source_v):
         # Note: vertex u precedes vertex v.
         if u is not None:
             for neighbor in graph[u]:
-                if neighbor not in costs:
+                if neighbor[0] not in costs:
                     v, w = neighbor
                     entry_v = entry_finder[v]
                     d_v = entry_v[0]
