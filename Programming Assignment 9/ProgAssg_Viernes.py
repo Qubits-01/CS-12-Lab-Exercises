@@ -163,23 +163,23 @@ if __name__ == '__main__':
 #     n = int(input())  # No. of planet/s.
 #
 #     coords = {}
-#     for i in range(n):
-#         coords[str(i)] = tuple(float(coord) for coord in input().split(','))
-#
 #     nearest_min, nearest_max = math.inf, math.inf
 #     start, end = '', ''
 #
-#     for coord_name, coord in coords.items():
-#         r2_min = get_r2([0, 0], coord)
-#         r2_max = get_r2(upper_right, coord)
+#     for i in range(n):
+#         curr_coord = tuple(float(coord) for coord in input().split(','))
+#         coords[str(i)] = curr_coord
+#
+#         r2_min = get_r2((0, 0), curr_coord)
+#         r2_max = get_r2(upper_right, curr_coord)
 #
 #         if r2_min < nearest_min:
 #             nearest_min = r2_min
-#             start = coord_name
+#             start = str(i)
 #
 #         if r2_max < nearest_max:
 #             nearest_max = r2_max
-#             end = coord_name
+#             end = str(i)
 #
 #     costs, pred, coords_copy = search(coords, start, max_d)
 #
