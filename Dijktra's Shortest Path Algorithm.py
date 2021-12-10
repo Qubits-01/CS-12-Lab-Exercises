@@ -37,7 +37,7 @@ def main():
         'GPU': []
     }
 
-    costs, pred = dijkstra_sssp(d_graph_d, 'Paperclip')
+    costs, pred = dijkstra_sssp(d_graph_c, '0')
     print(costs)
     print(pred)
 
