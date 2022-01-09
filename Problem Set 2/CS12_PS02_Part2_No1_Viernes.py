@@ -9,7 +9,8 @@ def main():
 
     count = int()
     for elem in perm:
-        logical_expr = elem[0] or (elem[1] and (not elem[1]))
+        A, B = elem
+        logical_expr = A or (B and (not B))
         count += 1 if logical_expr else 0
 
     print('count:', count)
@@ -21,7 +22,8 @@ def main():
 
     count = int()
     for elem in perm:
-        logical_expr = (not elem[0]) and (not (elem[1] or (elem[2] and (not (elem[3] and elem[4])))))
+        A, B, C, D, E = elem
+        logical_expr = ((not A) and (not (B or (C and not (D and E)))))
         count += 1 if logical_expr else 0
 
     print('count:', count)
@@ -33,7 +35,8 @@ def main():
 
     count = int()
     for elem in perm:
-        logical_expr = ((elem[0] and elem[1]) and (elem[0] or elem[2])) and (elem[3] and (not (elem[2] and elem[4])))
+        A, B, C, D, E = elem
+        logical_expr = ((A and B) and (A or C)) and (D and (not (C and E)))
         count += 1 if logical_expr else 0
 
     print('count:', count)
@@ -45,7 +48,8 @@ def main():
 
     count = int()
     for elem in perm:
-        logical_expr = (not (elem[0] or (elem[1] and (elem[2] or (not (elem[3] and (not (elem[4] or (elem[5] or elem[6])))))))))
+        A, B, C, D, E, F, G = elem
+        logical_expr = (not (A or (B and (C or not (D and (not (E or (F or G))))))))
         count += 1 if logical_expr else 0
 
     print('count:', count)
@@ -57,7 +61,8 @@ def main():
 
     count = int()
     for elem in perm:
-        logical_expr = (elem[0] and (not (elem[1] or (elem[2] and elem[3])))) or (elem[4] and (elem[5] or (not (elem[2] and (elem[6] or elem[7])))))
+        A, B, C, D, E, F, G, H = elem
+        logical_expr = ((A and (not (B or (C and D)))) or (E and (F or (not (C and (G or H))))))
         count += 1 if logical_expr else 0
 
     print('count:', count)
@@ -69,7 +74,8 @@ def main():
 
     count = int()
     for elem in perm:
-        logical_expr = ((elem[0] and elem[1]) or (not (elem[2] or elem[3]))) and (elem[4] or (not (elem[5] and (elem[6] or (elem[7] and elem[8])))))
+        A, B, C, D, E, F, H, I, J = elem
+        logical_expr = (((A and B) or (not (C or D)) and (E or (not (F and (H or (I and J)))))))
         count += 1 if logical_expr else 0
 
     print('count:', count)
