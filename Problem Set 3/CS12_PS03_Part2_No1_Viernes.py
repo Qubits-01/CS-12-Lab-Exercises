@@ -3,43 +3,82 @@ import math
 
 
 def main():
-    u_graph_a = {
-       'A': [('B', 6), ('D', 1)],
-        'B': [('A', 6), ('C', 5), ('D', 2), ('E', 2)],
-        'C': [('B', 5), ('E', 5)],
-        'D': [('A', 1), ('B', 2), ('E', 1)],
-        'E': [('B', 2), ('C', 5), ('D', 1)]
+    graph_1 = {
+        'A': [('B', 153), ('C', 232), ('D', 123)],
+        'B': [('A', 153), ('D', 12), ('J', 14)],
+        'C': [('A', 232), ('L', 932)],
+        'D': [('A', 123), ('B', 12), ('G', 123), ('J', 132)],
+        'E': [('F', 122), ('H', 213), ('I', 232), ('L', 23)],
+        'F': [('E', 122), ('G', 1134), ('I', 153), ('K', 23), ('L', 98)],
+        'G': [('D', 123), ('F', 1134), ('J', 13), ('L', 23)],
+        'H': [('E', 213), ('I', 985)],
+        'I': [('E', 232), ('F', 153), ('H', 985), ('K', 172)],
+        'J': [('B', 14), ('D', 132), ('G', 13)],
+        'K': [('F', 23), ('I', 172)],
+        'L': [('C', 932), ('E', 23), ('F', 98), ('G', 23)]
     }
 
-    d_graph_b = {
-        'A': [('B', 2), ('C', 6), ('D', 7)],
-        'B': [('D', 3), ('D', 6)],
-        'C': [('E', 1)],
-        'D': [('E', 5)],
-        'E': []
+    edges = {
+        ('A', 'B'): 153,
+        ('A', 'C'): 232,
+        ('A', 'D'): 123,
+        ('B', 'D'): 12,
+        ('B', 'J'): 14,
+        ('C', 'L'): 932,
+        ('D', 'G'): 123,
+        ('D', 'J'): 132,
+        ('E', 'F'): 122,
+        ('E', 'H'): 213,
+        ('E', 'I'): 232,
+        ('E', 'L'): 23,
+        ('F', 'G'): 1134,
+        ('F', 'I'): 153,
+        ('F', 'K'): 23,
+        ('F', 'L'): 98,
+        ('G', 'J'): 13,
+        ('G', 'L'): 23,
+        ('H', 'I'): 985,
+        ('I', 'K'): 172,
     }
 
-    d_graph_c = {
-        '0': [('1', 2), ('2', 6), ('3', 7)],
-        '1': [('3', 3), ('4', 6)],
-        '2': [('4', 1)],
-        '3': [('4', 5)],
-        '4': []
-    }
+    graph_2 = {}
+    for edge in edges:
+        graph_2.setdefault(edge[0], []).append((edge[1], edges[edge]))
+        graph_2.setdefault(edge[1], []).append((edge[0], edges[edge]))
 
-    d_graph_d = {
-        'Paperclip': [('A', 100), ('B', 20)],
-        'A': [('C', 21), ('B', 100)],
-        'B': [('C', 1), ('TV', 100), ('Shirt', 1000)],
-        'C': [('GPU', 12)],
-        'TV': [],
-        'Shirt': [],
-        'GPU': []
-    }
+    print(graph_1)
+    print(graph_2)
+    print(graph_1 == graph_2)
 
-    costs, pred = dijkstra_sssp(d_graph_c, '0')
+    print('\na) A to K')
+    costs, pred = dijkstra_sssp(graph_2, 'A')
     print('costs', costs)
     print('pred', pred)
+    print('A to K:', find_path(pred, 'K'), costs['K'])
+
+    print('\nb) H to D')
+    costs, pred = dijkstra_sssp(graph_2, 'H')
+    print('costs', costs)
+    print('pred', pred)
+    print('H to D:', find_path(pred, 'D'), costs['D'])
+
+    print('\nc) B to I')
+    costs, pred = dijkstra_sssp(graph_2, 'B')
+    print('costs', costs)
+    print('pred', pred)
+    print('B to I:', find_path(pred, 'I'), costs['I'])
+
+    print('\nd) I to C')
+    costs, pred = dijkstra_sssp(graph_2, 'I')
+    print('costs', costs)
+    print('pred', pred)
+    print('I to C:', find_path(pred, 'C'), costs['C'])
+
+    print('\ne) J to H')
+    costs, pred = dijkstra_sssp(graph_2, 'J')
+    print('costs', costs)
+    print('pred', pred)
+    print('J to H:', find_path(pred, 'H'), costs['H'])
 
 
 def dijkstra_sssp(graph, source_v):
@@ -105,10 +144,6 @@ def dijkstra_sssp(graph, source_v):
         else:
             add_entry(v, math.inf)
 
-    print('graph', graph)
-    print('pq', pq)
-    print('entry_finder', entry_finder)
-
     while pq:
         # pq[0] is the entry for the vertex with the current minimum path cost.
         d_u, u = pop_entry()
@@ -121,7 +156,6 @@ def dijkstra_sssp(graph, source_v):
                     entry_v = entry_finder[v]
                     d_v = entry_v[0]
 
-                    print(d_v, d_u, d_u + w, d_v > d_u + w)
                     if d_v > d_u + w:
                         # Update entry for v in the priority queue.
                         add_entry(v, d_u + w)
@@ -131,6 +165,14 @@ def dijkstra_sssp(graph, source_v):
             costs[u] = d_u
 
     return costs, pred
+
+
+def find_path(pred, destination):
+    path = [destination]
+    while path[0] is not None:
+        path.insert(0, pred[path[0]])
+
+    return ''.join(path[1:])
 
 
 if __name__ == '__main__':
